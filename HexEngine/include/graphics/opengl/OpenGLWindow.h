@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../core/IWindow.h"
+#include <graphics/opengl/IWindow.h>
 #include <GLFW/glfw3.h>
 #include <string>
 

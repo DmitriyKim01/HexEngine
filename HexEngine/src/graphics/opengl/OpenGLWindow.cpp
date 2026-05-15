@@ -1,6 +1,5 @@
 #include <glad/glad.h>
-
-#include "OpenGLWindow.h"
+#include <graphics/opengl/OpenGLWindow.h>
 #include <stdexcept>
 #include <iostream>
 
