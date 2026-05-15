@@ -11,7 +11,7 @@ int main() {
 	IWindow* window = new OpenGLWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "HexEngine");
     while (!window->shouldClose())
     {
-        window->setBackgroundColor(Color::White);
+        window->setBackgroundColor(Color::Blue);
 		window->update();
     }
     delete window;

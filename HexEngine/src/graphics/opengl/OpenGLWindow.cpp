@@ -93,5 +93,5 @@ void OpenGLWindow::setBackgroundColor(float red, float green, float blue, float 
 }
 
 void OpenGLWindow::setBackgroundColor(Color color) {
-	setBackgroundColor(color.normalizeRed(), color.normalizeGreen(), color.normalizeBlue(), color.normalizeAlpha());
+	setBackgroundColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 }

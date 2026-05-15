@@ -2,33 +2,27 @@
 
 class Color {
 private:
-	unsigned char m_red	= 255;
-	unsigned char m_green = 255;
-	unsigned char m_blue	= 255;
-	unsigned char m_alpha = 255;
+	float m_red	= 1.0f;
+	float m_green = 1.0f;
+	float m_blue	= 1.0f;
+	float m_alpha = 1.0f;
 public:
 	// If add custom constructor, C++ does not automatically generate the default constructor anymore
 	Color() = default;
-	Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);
+	Color(float red, float green, float blue, float alpha = 1.0f);
 
 	// Getters
-	unsigned char getRed()		const;
-	unsigned char getGreen()	const;
-	unsigned char getBlue()		const;
-	unsigned char getAlpha()	const;
+	float getRed()		const;
+	float getGreen()	const;
+	float getBlue()		const;
+	float getAlpha()	const;
 
 	// Setters
 	void setRed(float red);
 	void setGreen(float green);
 	void setBlue(float blue);
 	void setAlpha(float alpha);
-	void setRGBA(float red, float green, float blue, float alpha = 255);
-
-	// Normalized getters (0.0f - 1.0f)
-	float normalizeRed() const;
-	float normalizeGreen() const;
-	float normalizeBlue() const;
-	float normalizeAlpha() const;
+	void setRGBA(float red, float green, float blue, float alpha = 1.0f);
 
 	// Operators
 	Color operator+(const Color& other) const;
