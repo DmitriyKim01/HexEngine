@@ -5,6 +5,16 @@
 #include <string>
 
 class OpenGLWindow : public IWindow {
+private:
+	int m_Width;
+	int m_Height;
+	std::string m_Title;
+	GLFWwindow* m_Window = nullptr;
+
+	void init();
+	void setGLFWHints();
+	static int validateDimension(int value, const std::string& name);
+
 public:
 	struct Defaults {
 		static constexpr int WIDTH = 1280;
@@ -25,13 +35,6 @@ public:
 	int getWidth()	const override;
 	int getHeight() const override;
 
-private:
-	GLFWwindow* m_Window = nullptr;
-	int m_Width;
-	int m_Height;
-	std::string m_Title;
-
-	void init();
-	void setGLFWHints();
-	static int validateDimension(int value, const std::string& name);
+	void setBackgroundColor(float red, float green, float blue, float alpha) override;
+	void setBackgroundColor(Color color) override;
 };

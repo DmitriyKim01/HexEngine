@@ -27,9 +27,15 @@
     <ClCompile Include="src\graphics\opengl\OpenGLWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\shapes\Color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\graphics\opengl\OpenGLWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics\shapes\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

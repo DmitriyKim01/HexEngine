@@ -86,3 +86,12 @@ void OpenGLWindow::setGLFWHints() {
 #endif
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 }
+
+void OpenGLWindow::setBackgroundColor(float red, float green, float blue, float alpha) {
+	glClearColor(red, green, blue, alpha);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void OpenGLWindow::setBackgroundColor(Color color) {
+	setBackgroundColor(color.normalizeRed(), color.normalizeGreen(), color.normalizeBlue(), color.normalizeAlpha());
+}

@@ -156,10 +156,12 @@
     <ClCompile Include="include\graphics\opengl\IWindow.h" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\graphics\opengl\OpenGLWindow.cpp" />
+    <ClCompile Include="src\graphics\shapes\Color.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\graphics\opengl\OpenGLWindow.h" />
+    <ClInclude Include="include\graphics\shapes\Color.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
