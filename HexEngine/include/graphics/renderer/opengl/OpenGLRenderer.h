@@ -6,16 +6,21 @@
 class OpenGLRenderer : public Renderer
 {
 private:
+	Window* m_Window = nullptr;
 	Color m_ClearColor;
 public:
-	OpenGLRenderer();
-	OpenGLRenderer(Color clearColor);
-	OpenGLRenderer(float red, float green, float blue, float alpha = 1.0f);
+	OpenGLRenderer(Window& window, const Color& clearColor);
+
+	void initialize(Window& window) override;
+	void shutdown() override;
 
 	void beginFrame() override;
 	void endFrame() override;
 
-	void setClearColor(Color color) override;
+	void clear() override;
+	void setClearColor(const Color& color) override;
 
-	void drawRectangle(const Rectangle& rectangle) override;
+	void onResize(int width, int height) override;
+
+	void draw(const Rectangle& rectangle) override;
 };

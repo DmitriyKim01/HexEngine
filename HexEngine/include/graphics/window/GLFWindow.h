@@ -29,8 +29,10 @@ public:
 	GLFWindow(int width, int height, const std::string& title);
 	~GLFWindow();
 
-	void update()		override;
+	void pollEvents()		override;
+	void swapBuffers()		override;
 	bool shouldClose()	override;
+	void shutdown() 	override;
 
 	int getWidth()	const override;
 	int getHeight() const override;

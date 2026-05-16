@@ -17,13 +17,23 @@ int main()
 	Rectangle rect3(600.0f, 200.0f, 50.0f, 200.0f, Color::Blue);
 
 	Window* window = new GLFWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "HexEngine");
-	Renderer* renderer = new OpenGLRenderer(Color(0.1f, 0.1f, 0.1f));
-
+	Renderer* renderer = new OpenGLRenderer(*window, Color::White);
 
 	while (!window->shouldClose())
 	{
-		window->update();
+		window->pollEvents();
+		renderer->beginFrame();
+
+		//renderer->draw(rect);
+
+		renderer->endFrame();
+		window->swapBuffers();
 	}
+	
+	renderer->shutdown();
+	window->shutdown();
+
+	delete renderer;
 	delete window;
 	return 0;
 }

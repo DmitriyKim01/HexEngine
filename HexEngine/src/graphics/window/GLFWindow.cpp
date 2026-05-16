@@ -37,7 +37,7 @@ GLFWindow::GLFWindow(int width, int height, const std::string& title)
 	init();
 }
 
-GLFWindow::~GLFWindow()
+void GLFWindow::shutdown()
 {
 	if (m_Window)
 	{
@@ -45,6 +45,11 @@ GLFWindow::~GLFWindow()
 		m_Window = nullptr;
 	}
 	glfwTerminate();
+}
+
+GLFWindow::~GLFWindow()
+{
+	shutdown();
 }
 
 // IWindow Interface Implementation =====================
@@ -73,10 +78,14 @@ void GLFWindow::init()
 	glViewport(0, 0, m_Width, m_Height);
 }
 
-void GLFWindow::update()
+void GLFWindow::pollEvents()
+{
+	glfwPollEvents();
+}
+
+void GLFWindow::swapBuffers()
 {
 	glfwSwapBuffers(m_Window);
-	glfwPollEvents();
 }
 
 bool GLFWindow::shouldClose()

@@ -4,14 +4,22 @@
 
 #include <stdexcept>
 
-OpenGLRenderer::OpenGLRenderer() : m_ClearColor(0, 0, 0, 1.0f)
-{}
+OpenGLRenderer::OpenGLRenderer(Window& window, const Color& clearColor)
+	: m_ClearColor(clearColor)
+{
+	initialize(window);
+}
 
-OpenGLRenderer::OpenGLRenderer(Color clearColor) : m_ClearColor(clearColor)
-{}
+void OpenGLRenderer::initialize(Window& window)
+{
+	m_Window = &window;
+	glViewport(0, 0, window.getWidth(), window.getHeight());
+}
 
-OpenGLRenderer::OpenGLRenderer(float red, float green, float blue, float alpha) : m_ClearColor(red, green, blue, alpha)
-{}
+void OpenGLRenderer::shutdown()
+{
+
+}
 
 void OpenGLRenderer::beginFrame()
 {
@@ -21,20 +29,30 @@ void OpenGLRenderer::beginFrame()
 	float alpha = m_ClearColor.getAlpha();
 
 	glClearColor(red, green, blue, alpha);
-	glClear(GL_COLOR_BUFFER_BIT);
+	clear();
 }
 
 void OpenGLRenderer::endFrame()
 {
-	throw std::logic_error("Renderer::render() is not implemented.");
+
 }
 
-void OpenGLRenderer::setClearColor(Color color)
+void OpenGLRenderer::clear()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void OpenGLRenderer::setClearColor(const Color& color)
 {
 	m_ClearColor = color;
 }
 
-void OpenGLRenderer::drawRectangle(const Rectangle& rectangle)
+void OpenGLRenderer::onResize(int width, int height)
+{
+	glViewport(0, 0, width, height);
+}
+
+void OpenGLRenderer::draw(const Rectangle& rectangle)
 {
 	throw std::logic_error("Renderer::drawRectangle() is not implemented.");
 }

@@ -2,8 +2,10 @@
 
 #include <graphics/shapes/Color.h>
 #include <graphics/shapes/2d/Rectangle.h>
+#include <graphics/window/Window.h>
 
 class Renderer {
+public:
 	virtual ~Renderer() = default;
 
 	virtual void initialize(Window& window) = 0;
@@ -17,5 +19,5 @@ class Renderer {
 
 	virtual void onResize(int width, int height) = 0;
 
-	virtual void drawRectangle(const Rectangle& rectangle) = 0;
+	virtual void draw(const Rectangle& rectangle) = 0;
 };
