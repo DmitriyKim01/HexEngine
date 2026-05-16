@@ -1,10 +1,10 @@
 #pragma once
 
-#include <graphics/opengl/IWindow.h>
+#include <graphics/window/Window.h>
 #include <GLFW/glfw3.h>
 #include <string>
 
-class OpenGLWindow : public IWindow {
+class GLFWindow : public Window {
 private:
 	int m_Width;
 	int m_Height;
@@ -24,10 +24,10 @@ public:
 		static constexpr int         GL_MINOR = 3;
 	};
 
-	OpenGLWindow();
-	OpenGLWindow(int width, int height);
-	OpenGLWindow(int width, int height, const std::string& title);
-	~OpenGLWindow();
+	GLFWindow();
+	GLFWindow(int width, int height);
+	GLFWindow(int width, int height, const std::string& title);
+	~GLFWindow();
 
 	void update()		override;
 	bool shouldClose()	override;
@@ -35,6 +35,4 @@ public:
 	int getWidth()	const override;
 	int getHeight() const override;
 
-	void setBackgroundColor(float red, float green, float blue, float alpha) override;
-	void setBackgroundColor(Color color) override;
 };

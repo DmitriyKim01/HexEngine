@@ -13,7 +13,7 @@ const Color Color::Cyan         = { 0.0f, 1.0f, 1.0f, 1.0f };
 const Color Color::Magenta      = { 1.0f, 0.0f, 1.0f, 1.0f };
 const Color Color::Transparent  = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-static unsigned char clampByte(float value) {
+static float clampByte(float value) {
 	return std::max(0.0f, std::min(1.0f, value));
 }
 
