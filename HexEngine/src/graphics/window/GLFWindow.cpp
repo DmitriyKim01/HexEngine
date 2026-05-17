@@ -69,6 +69,7 @@ void GLFWindow::init()
 		throw std::runtime_error("OpenGLWindow: glfwCreateWindow() failed");
 	}
 	glfwMakeContextCurrent(m_Window);
+	glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		throw std::runtime_error("OpenGLWindow: gladLoadGLLoader() failed");
@@ -106,4 +107,9 @@ void GLFWindow::setGLFWHints()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);  // required on macOS
 #endif
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+}
+
+void GLFWindow::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
 }

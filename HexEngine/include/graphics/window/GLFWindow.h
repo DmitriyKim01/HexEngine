@@ -14,6 +14,7 @@ private:
 	void init();
 	void setGLFWHints();
 	static int validateDimension(int value, const std::string& name);
+	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 public:
 	struct Defaults {

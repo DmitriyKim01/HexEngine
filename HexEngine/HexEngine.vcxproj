@@ -156,6 +156,7 @@
     <ClCompile Include="include\graphics\window\Window.h" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\graphics\renderer\opengl\OpenGLRenderer.cpp" />
+    <ClCompile Include="src\graphics\renderer\opengl\Shader.cpp" />
     <ClCompile Include="src\graphics\window\GLFWindow.cpp" />
     <ClCompile Include="src\graphics\shapes\2d\Rectangle.cpp" />
     <ClCompile Include="src\graphics\shapes\Color.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\graphics\renderer\opengl\Shader.h" />
     <ClInclude Include="include\graphics\window\GLFWindow.h" />
     <ClInclude Include="include\graphics\renderer\opengl\OpenGLRenderer.h" />
     <ClInclude Include="include\graphics\renderer\Renderer.h" />
@@ -171,6 +173,10 @@
     <ClInclude Include="include\graphics\shapes\Color.h" />
     <ClInclude Include="include\graphics\shapes\Shape2D.h" />
     <ClInclude Include="include\graphics\shapes\Position.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\opengl\shaders\base.frag" />
+    <None Include="assets\opengl\shaders\base.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

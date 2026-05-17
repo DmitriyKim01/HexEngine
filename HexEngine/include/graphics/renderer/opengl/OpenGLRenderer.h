@@ -7,6 +7,7 @@ class OpenGLRenderer : public Renderer
 {
 private:
 	Window* m_Window = nullptr;
+	unsigned int m_ShaderProgram = 0;
 	Color m_ClearColor;
 public:
 	OpenGLRenderer(Window& window, const Color& clearColor);
