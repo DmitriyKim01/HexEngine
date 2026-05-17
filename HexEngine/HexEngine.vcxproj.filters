@@ -42,7 +42,7 @@
     <ClCompile Include="src\graphics\renderer\opengl\OpenGLRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\renderer\opengl\Shader.cpp">
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,7 +68,7 @@
     <ClInclude Include="include\graphics\renderer\opengl\OpenGLRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\graphics\renderer\opengl\Shader.h">
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

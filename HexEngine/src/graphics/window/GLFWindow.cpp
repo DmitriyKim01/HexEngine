@@ -113,3 +113,9 @@ void GLFWindow::framebuffer_size_callback(GLFWwindow* window, int width, int hei
 {
 	glViewport(0, 0, width, height);
 }
+
+void::GLFWindow::update()
+{
+	swapBuffers();
+	pollEvents();
+}

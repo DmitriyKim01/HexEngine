@@ -32,6 +32,7 @@ public:
 
 	void pollEvents()		override;
 	void swapBuffers()		override;
+	void update() 		override;
 	bool shouldClose()	override;
 	void shutdown() 	override;
 

@@ -4,15 +4,16 @@
 #include <glad/glad.h>
 #include <string>
 
-class Shader {
+class OpenGLShader {
 private:
     void checkCompileErrors(unsigned int shader, std::string type);
+    std::string readShaderFromFile(const char* shaderPath);
 public:
     // the program ID
     unsigned int ID;
 
     // constructor reads and builds the shader
-    Shader(const char* vertexPath, const char* fragmentPath);
+    OpenGLShader(const char* vertexPath, const char* fragmentPath);
     // use/activate the shader
     void use();
     // utility uniform functions

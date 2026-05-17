@@ -8,6 +8,7 @@ public:
 
 	virtual void pollEvents() = 0;
 	virtual void swapBuffers() = 0;
+	virtual void update() = 0;
 	virtual bool shouldClose() = 0;
 	virtual void shutdown() = 0;
 

@@ -1,5 +1,6 @@
 #include <graphics/renderer/opengl/OpenGLRenderer.h>
 #include <graphics/shapes/Position.h>
+#include <graphics/shapes/Color.h>
 
 #include <glad/glad.h>
 
@@ -27,18 +28,29 @@ void OpenGLRenderer::initRectangleBuffers()
 	glBindVertexArray(m_RectangleVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVBO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 18, nullptr, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36, nullptr, GL_DYNAMIC_DRAW);
 
 	glVertexAttribPointer(
 		0,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
-		sizeof(Position),
-		reinterpret_cast<void*>(0)
+		6 * sizeof(float),
+		(void*)0
 	);
 	glEnableVertexAttribArray(0);
-	glBindVertexArray(0);
+
+	glVertexAttribPointer(
+		1,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		6 * sizeof(float),
+		(void*)(3 * sizeof(float))
+	);
+	glEnableVertexAttribArray(1);
+
+	//glBindVertexArray(0);
 }
 
 void OpenGLRenderer::destroyRectangleBuffers()
@@ -110,15 +122,19 @@ void OpenGLRenderer::draw(const Rectangle& rectangle)
 
 	float z = (rectangle.position.z - 0.0f) / (100.0f - 0.0f) * 2.0f - 1.0f;
 
-	std::array<float, 18> rectangleVertices = {
+	float red = rectangle.color.getRed();
+	float green = rectangle.color.getGreen();
+	float blue = rectangle.color.getBlue();
+
+	std::array<float, 36> rectangleVertices = {
 		// First Triangle
-		left,  top,		z,
-		right, top,		z,
-		right, bottom,	z,
+		left,  top,		z,	red, green, blue,
+		right, top,		z,	red, green, blue,
+		right, bottom,	z,	red, green, blue,
 		// Second Triangle
-		left,  top,		z,
-		right, bottom,	z,
-		left,  bottom,  z,
+		left,  top,		z,	red, green, blue,
+		right, bottom,	z,	red, green, blue,
+		left,  bottom,  z,	red, green, blue,
 	};
 
 	unsigned int indices[] = {  // note that we start from 0!

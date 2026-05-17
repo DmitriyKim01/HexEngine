@@ -1,4 +1,4 @@
-#include <graphics/renderer/opengl/Shader.h>
+#include <graphics/renderer/opengl/OpenGLShader.h>
 
 #include <glad/glad.h>
 
@@ -7,46 +7,17 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
+OpenGLShader::OpenGLShader(const char* vertexPath, const char* fragmentPath)
 {
 	// 1. retrieve the vertex/fragment source code from filePath
-	std::string vertexCode;
-	std::string fragmentCode;
-	std::ifstream vertexShaderFile;
-	std::ifstream fragmentShaderFile;
-
-	// ensure ifstream objects can throw exceptions:
-	vertexShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-	fragmentShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-
-	try
-	{
-		// open files
-		vertexShaderFile.open(vertexPath);
-		fragmentShaderFile.open(fragmentPath);
-		std::stringstream vertexShaderStream, fragmentShaderStream;
-		// read file's buffer contents into streams
-		vertexShaderStream << vertexShaderFile.rdbuf();
-		fragmentShaderStream << fragmentShaderFile.rdbuf();
-		// close file handlers
-		vertexShaderFile.close();
-		fragmentShaderFile.close();
-		// convert stream into string
-		vertexCode = vertexShaderStream.str();
-		fragmentCode = fragmentShaderStream.str();
-	}
-	catch (std::ifstream::failure e)
-	{
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
-	}
+	std::string vertexCode = readShaderFromFile(vertexPath);
+	std::string fragmentCode = readShaderFromFile(fragmentPath);
 
 	const char* vertexShaderCode = vertexCode.c_str();
 	const char* fragmentShaderCode = fragmentCode.c_str();
 
 	// 2. compile shaders
 	unsigned int vertex, fragment;
-	int success;
-	char infoLog[512];
 
 	// vertex Shader
 	vertex = glCreateShader(GL_VERTEX_SHADER);
@@ -65,20 +36,38 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	glAttachShader(ID, vertex);
 	glAttachShader(ID, fragment);
 	glLinkProgram(ID);
-	// print linking errors if any
-	glGetProgramiv(ID, GL_LINK_STATUS, &success);
-
-	if (!success)
-	{
-		glGetProgramInfoLog(ID, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
+	checkCompileErrors(ID, "PROGRAM");
 
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 }
 
-void Shader::checkCompileErrors(unsigned int shader, std::string type)
+std::string OpenGLShader::readShaderFromFile(const char* shaderPath)
+{
+	std::string code;
+	std::ifstream shaderFile;
+	// ensure ifstream objects can throw exceptions:
+	shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	try
+	{
+		// open file
+		shaderFile.open(shaderPath);
+		std::stringstream shaderStream;
+		// read file's buffer contents into stream
+		shaderStream << shaderFile.rdbuf();
+		// close file handler
+		shaderFile.close();
+		// convert stream into string
+		code = shaderStream.str();
+	}
+	catch (std::ifstream::failure e)
+	{
+		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << shaderPath << std::endl;
+	}
+	return code;
+};
+
+void OpenGLShader::checkCompileErrors(unsigned int shader, std::string type)
 {
 	int success;
 	char infoLog[1024];
@@ -104,20 +93,20 @@ void Shader::checkCompileErrors(unsigned int shader, std::string type)
 	}
 }
 
-void Shader::use()
+void OpenGLShader::use()
 {
 	glUseProgram(ID);
 }
 
-void Shader::setBool(const std::string& name, bool value) const
+void OpenGLShader::setBool(const std::string& name, bool value) const
 {
 	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 }
-void Shader::setInt(const std::string& name, int value) const
+void OpenGLShader::setInt(const std::string& name, int value) const
 {
 	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
-void Shader::setFloat(const std::string& name, float value) const
+void OpenGLShader::setFloat(const std::string& name, float value) const
 {
 	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
