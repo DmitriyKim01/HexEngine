@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -71,13 +71,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)external\includes\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\includes\;$(SolutionDir)HexEngine\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)external\libs\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)build\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)external\includes\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\includes\;$(SolutionDir)HexEngine\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)external\libs\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)build\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
@@ -153,14 +153,30 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\IWindow.h" />
-    <ClCompile Include="src\core\window.cpp" />
+    <ClCompile Include="include\graphics\window\Window.h" />
     <ClCompile Include="src\glad.c" />
-    <ClCompile Include="src\graphics\opengl\OpenGLWindow.cpp" />
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLRenderer.cpp" />
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLShader.cpp" />
+    <ClCompile Include="src\graphics\window\GLFWindow.cpp" />
+    <ClCompile Include="src\graphics\shapes\2d\Rectangle.cpp" />
+    <ClCompile Include="src\graphics\shapes\Color.cpp" />
+    <ClCompile Include="src\graphics\shapes\Position.cpp" />
+    <ClCompile Include="src\graphics\shapes\Shape2D.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\graphics\opengl\OpenGLWindow.h" />
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLShader.h" />
+    <ClInclude Include="include\graphics\window\GLFWindow.h" />
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLRenderer.h" />
+    <ClInclude Include="include\graphics\renderer\Renderer.h" />
+    <ClInclude Include="include\graphics\shapes\2d\Rectangle.h" />
+    <ClInclude Include="include\graphics\shapes\Color.h" />
+    <ClInclude Include="include\graphics\shapes\Shape2D.h" />
+    <ClInclude Include="include\graphics\shapes\Position.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\opengl\shaders\base.frag" />
+    <None Include="assets\opengl\shaders\base.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
