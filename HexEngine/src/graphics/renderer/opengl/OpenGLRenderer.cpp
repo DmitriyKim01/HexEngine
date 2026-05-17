@@ -1,4 +1,5 @@
 #include <graphics/renderer/opengl/OpenGLRenderer.h>
+#include <graphics/shapes/Position.h>
 
 #include <glad/glad.h>
 
@@ -7,9 +8,52 @@
 #include <array>
 
 OpenGLRenderer::OpenGLRenderer(Window& window, const Color& clearColor)
-	: m_ClearColor(clearColor)
+	: m_ClearColor(clearColor), m_Shader("assets/opengl/shaders/base.vert", "assets/opengl/shaders/base.frag")
 {
 	initialize(window);
+	initRectangleBuffers();
+}
+
+OpenGLRenderer::~OpenGLRenderer()
+{
+	shutdown();
+}
+
+void OpenGLRenderer::initRectangleBuffers()
+{
+	glGenVertexArrays(1, &m_RectangleVAO);
+	glGenBuffers(1, &m_RectangleVBO);
+
+	glBindVertexArray(m_RectangleVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 18, nullptr, GL_DYNAMIC_DRAW);
+
+	glVertexAttribPointer(
+		0,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(Position),
+		reinterpret_cast<void*>(0)
+	);
+	glEnableVertexAttribArray(0);
+	glBindVertexArray(0);
+}
+
+void OpenGLRenderer::destroyRectangleBuffers()
+{
+	if (m_RectangleVBO != 0)
+	{
+		glDeleteBuffers(1, &m_RectangleVBO);
+		m_RectangleVBO = 0;
+	}
+
+	if (m_RectangleVAO != 0)
+	{
+		glDeleteVertexArrays(1, &m_RectangleVAO);
+		m_RectangleVAO = 0;
+	}
 }
 
 void OpenGLRenderer::initialize(Window& window)
@@ -20,7 +64,7 @@ void OpenGLRenderer::initialize(Window& window)
 
 void OpenGLRenderer::shutdown()
 {
-
+	destroyRectangleBuffers();
 }
 
 void OpenGLRenderer::beginFrame()
@@ -30,6 +74,7 @@ void OpenGLRenderer::beginFrame()
 	float blue = m_ClearColor.getBlue();
 	float alpha = m_ClearColor.getAlpha();
 
+	m_Shader.use();
 	glClearColor(red, green, blue, alpha);
 	clear();
 }
@@ -81,37 +126,16 @@ void OpenGLRenderer::draw(const Rectangle& rectangle)
 	  1, 2, 3   // second Triangle
 	};
 
-	unsigned int VBO, VAO, EBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glBindVertexArray(VAO);
+	glBindVertexArray(m_RectangleVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVBO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, rectangleVertices.size() * sizeof(float), rectangleVertices.data(), GL_STATIC_DRAW);
+	glBufferSubData(
+		GL_ARRAY_BUFFER,
+		0,
+		sizeof(rectangleVertices),
+		rectangleVertices.data()
+	);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
-
-	// In a loop
-	// draw our first triangle
-	glUseProgram(m_ShaderProgram);
-	glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-	//glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
 }
