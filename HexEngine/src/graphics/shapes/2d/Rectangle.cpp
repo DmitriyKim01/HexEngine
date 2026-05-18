@@ -45,3 +45,23 @@ float Rectangle::getArea() const {
 	return m_Width * m_Height;
 }
 
+std::array<float, 24> Rectangle::getVertices() const
+{
+	float left = position.x;
+	float right = position.x + getWidth();
+	float top = position.y;
+	float bottom = position.y + getHeight();
+	float z = position.z;
+
+	float red = color.getRed();
+	float green = color.getGreen();
+	float blue = color.getBlue();
+
+	return {
+		left,  top,    z,  red, green, blue,
+		right, top,    z,  red, green, blue,
+		right, bottom, z,  red, green, blue,
+		left,  bottom, z,  red, green, blue,
+	};
+}
+

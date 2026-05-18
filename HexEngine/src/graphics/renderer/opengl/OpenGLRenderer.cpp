@@ -101,6 +101,10 @@ void OpenGLRenderer::beginFrame()
 	float alpha = m_ClearColor.getAlpha();
 
 	m_Shader.use();
+	m_Shader.setVec2("u_Resolution",
+					 static_cast<float>(m_Window->getWidth()),
+					 static_cast<float>(m_Window->getHeight()));
+
 	glClearColor(red, green, blue, alpha);
 	clear();
 }
@@ -127,30 +131,7 @@ void OpenGLRenderer::onResize(int width, int height)
 
 void OpenGLRenderer::draw(const Rectangle& rectangle)
 {
-	// Normalize coordinates to OpenGL's NDC (-1.0f to 1.0f)
-	float left = (rectangle.position.x / m_Window->getWidth()) * 2.0f - 1.0f;
-	float right = ((rectangle.position.x + rectangle.getWidth()) / m_Window->getWidth()) * 2.0f - 1.0f;
-
-	float top = 1.0f - (rectangle.position.y / m_Window->getHeight()) * 2.0f;
-	float bottom = 1.0f - ((rectangle.position.y + rectangle.getHeight()) / m_Window->getHeight()) * 2.0f;
-
-	float z = (rectangle.position.z - 0.0f) / (100.0f - 0.0f) * 2.0f - 1.0f;
-
-	float red = rectangle.color.getRed();
-	float green = rectangle.color.getGreen();
-	float blue = rectangle.color.getBlue();
-
-	std::array<float, 24> rectangleVertices = {
-		left,  top,    z,  red, green, blue,   // 0 top-left
-		right, top,    z,  red, green, blue,   // 1 top-right
-		right, bottom, z,  red, green, blue,   // 2 bottom-right
-		left,  bottom, z,  red, green, blue,   // 3 bottom-left
-	};
-
-	unsigned int indices[] = {  // note that we start from 0!
-	  0, 1, 3,  // first Triangle
-	  1, 2, 3   // second Triangle
-	};
+	std::array<float, 24> rectangleVertices = rectangle.getVertices();
 
 	glBindVertexArray(m_RectangleVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVBO);

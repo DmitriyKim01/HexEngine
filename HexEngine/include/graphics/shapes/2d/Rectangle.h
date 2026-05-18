@@ -2,6 +2,8 @@
 
 #include <graphics/shapes/Shape2D.h>
 
+#include <array>
+
 class Rectangle : public Shape2D {
 private:
 	float m_Width = 1.0f;
@@ -19,4 +21,5 @@ public:
 
 	float getArea() const;
 
+	std::array<float, 24> getVertices() const;
 };
