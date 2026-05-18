@@ -9,7 +9,7 @@
 #include <array>
 
 OpenGLRenderer::OpenGLRenderer(Window& window, const Color& clearColor)
-	: m_ClearColor(clearColor), m_Shader("assets/opengl/shaders/base.vert", "assets/opengl/shaders/base.frag")
+	: m_clearColor(clearColor), m_shader("assets/opengl/shaders/base.vert", "assets/opengl/shaders/base.frag")
 {
 	initialize(window);
 	initRectangleBuffers();
@@ -22,12 +22,12 @@ OpenGLRenderer::~OpenGLRenderer()
 
 void OpenGLRenderer::initRectangleBuffers()
 {
-	glGenVertexArrays(1, &m_RectangleVAO);
-	glGenBuffers(1, &m_RectangleVBO);
-	glGenBuffers(1, &m_RectangleEBO);
+	glGenVertexArrays(1, &m_rectangleVAO);
+	glGenBuffers(1, &m_rectangleVBO);
+	glGenBuffers(1, &m_rectangleEBO);
 
-	glBindVertexArray(m_RectangleVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVBO);
+	glBindVertexArray(m_rectangleVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_rectangleVBO);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 24, nullptr, GL_DYNAMIC_DRAW);
 
@@ -36,7 +36,7 @@ void OpenGLRenderer::initRectangleBuffers()
 	0, 2, 3    // second triangle (top-left, bottom-right, bottom-left)
 	};
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rectangleEBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(
@@ -64,27 +64,27 @@ void OpenGLRenderer::initRectangleBuffers()
 
 void OpenGLRenderer::destroyRectangleBuffers()
 {
-	if (m_RectangleEBO != 0)
+	if (m_rectangleEBO != 0)
 	{
-		glDeleteBuffers(1, &m_RectangleEBO);
-		m_RectangleEBO = 0;
+		glDeleteBuffers(1, &m_rectangleEBO);
+		m_rectangleEBO = 0;
 	}
-	if (m_RectangleVBO != 0)
+	if (m_rectangleVBO != 0)
 	{
-		glDeleteBuffers(1, &m_RectangleVBO);
-		m_RectangleVBO = 0;
+		glDeleteBuffers(1, &m_rectangleVBO);
+		m_rectangleVBO = 0;
 	}
 
-	if (m_RectangleVAO != 0)
+	if (m_rectangleVAO != 0)
 	{
-		glDeleteVertexArrays(1, &m_RectangleVAO);
-		m_RectangleVAO = 0;
+		glDeleteVertexArrays(1, &m_rectangleVAO);
+		m_rectangleVAO = 0;
 	}
 }
 
 void OpenGLRenderer::initialize(Window& window)
 {
-	m_Window = &window;
+	m_window = &window;
 	glViewport(0, 0, window.getWidth(), window.getHeight());
 }
 
@@ -95,15 +95,15 @@ void OpenGLRenderer::shutdown()
 
 void OpenGLRenderer::beginFrame()
 {
-	float red = m_ClearColor.getRed();
-	float green = m_ClearColor.getGreen();
-	float blue = m_ClearColor.getBlue();
-	float alpha = m_ClearColor.getAlpha();
+	float red = m_clearColor.getRed();
+	float green = m_clearColor.getGreen();
+	float blue = m_clearColor.getBlue();
+	float alpha = m_clearColor.getAlpha();
 
-	m_Shader.use();
-	m_Shader.setVec2("u_Resolution",
-					 static_cast<float>(m_Window->getWidth()),
-					 static_cast<float>(m_Window->getHeight()));
+	m_shader.use();
+	m_shader.setVec2("u_Resolution",
+					 static_cast<float>(m_window->getWidth()),
+					 static_cast<float>(m_window->getHeight()));
 
 	glClearColor(red, green, blue, alpha);
 	clear();
@@ -121,7 +121,7 @@ void OpenGLRenderer::clear()
 
 void OpenGLRenderer::setClearColor(const Color& color)
 {
-	m_ClearColor = color;
+	m_clearColor = color;
 }
 
 void OpenGLRenderer::onResize(int width, int height)
@@ -133,8 +133,8 @@ void OpenGLRenderer::draw(const Rectangle& rectangle)
 {
 	std::array<float, 24> rectangleVertices = rectangle.getVertices();
 
-	glBindVertexArray(m_RectangleVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVBO);
+	glBindVertexArray(m_rectangleVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_rectangleVBO);
 	glBufferSubData(
 		GL_ARRAY_BUFFER,
 		0,

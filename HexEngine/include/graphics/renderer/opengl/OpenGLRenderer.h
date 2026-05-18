@@ -7,13 +7,13 @@
 class OpenGLRenderer : public Renderer
 {
 private:
-	Window* m_Window = nullptr;
-	Color m_ClearColor;
-	OpenGLShader m_Shader;
+	Window* m_window = nullptr;
+	Color m_clearColor;
+	OpenGLShader m_shader;
 
-	unsigned int m_RectangleVAO = 0;
-	unsigned int m_RectangleVBO = 0;
-	unsigned int m_RectangleEBO = 0;
+	unsigned int m_rectangleVAO = 0;
+	unsigned int m_rectangleVBO = 0;
+	unsigned int m_rectangleEBO = 0;
 
 	void initRectangleBuffers();
 	void destroyRectangleBuffers();

@@ -6,10 +6,10 @@
 
 class GLFWindow : public Window {
 private:
-	int m_Width;
-	int m_Height;
-	std::string m_Title;
-	GLFWwindow* m_Window = nullptr;
+	int m_width;
+	int m_height;
+	std::string m_title;
+	GLFWwindow* m_window = nullptr;
 
 	void init();
 	void setGLFWHints();

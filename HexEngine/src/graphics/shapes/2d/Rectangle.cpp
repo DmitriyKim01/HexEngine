@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 Rectangle::Rectangle(Position position, float width, float height, Color color)
-	: Shape2D(position, color), m_Width(width), m_Height(height)
+	: Shape2D(position, color), m_width(width), m_height(height)
 {
 	if (width <= 0.0f)
 	{
@@ -38,12 +38,12 @@ Rectangle::Rectangle(int x, int y, int z, int width, int height, Color color)
 
 float Rectangle::getHeight() const
 {
-	return m_Height;
+	return m_height;
 }
 
 float Rectangle::getWidth() const
 {
-	return m_Width;
+	return m_width;
 }
 
 void Rectangle::setHeight(float height)
@@ -52,7 +52,7 @@ void Rectangle::setHeight(float height)
 	{
 		throw std::invalid_argument("Rectangle's height must be a positive value.");
 	}
-	m_Height = height;
+	m_height = height;
 }
 
 void Rectangle::setWidth(float width)
@@ -61,12 +61,12 @@ void Rectangle::setWidth(float width)
 	{
 		throw std::invalid_argument("Rectangle's width must be a positive value.");
 	}
-	m_Width = width;
+	m_width = width;
 }
 
 float Rectangle::getArea() const
 {
-	return m_Width * m_Height;
+	return m_width * m_height;
 }
 
 std::array<float, 24> Rectangle::getVertices() const

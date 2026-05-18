@@ -6,8 +6,8 @@
 
 class Rectangle : public Shape2D {
 private:
-	float m_Width = 1.0f;
-	float m_Height = 1.0f;
+	float m_width = 1.0f;
+	float m_height = 1.0f;
 public:
 	Rectangle(Position position, float width, float height, Color color);
 	Rectangle(Position position, int width, int height, Color color);
