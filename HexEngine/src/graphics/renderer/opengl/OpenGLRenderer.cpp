@@ -9,7 +9,7 @@
 #include <array>
 
 OpenGLRenderer::OpenGLRenderer(Window& window, const Color& clearColor)
-	: m_ClearColor(clearColor), m_Shader("assets/opengl/shaders/base.vert", "assets/opengl/shaders/base.frag")
+	: m_clearColor(clearColor), m_shader("assets/opengl/shaders/base.vert", "assets/opengl/shaders/base.frag")
 {
 	initialize(window);
 	initRectangleBuffers();
@@ -22,13 +22,22 @@ OpenGLRenderer::~OpenGLRenderer()
 
 void OpenGLRenderer::initRectangleBuffers()
 {
-	glGenVertexArrays(1, &m_RectangleVAO);
-	glGenBuffers(1, &m_RectangleVBO);
+	glGenVertexArrays(1, &m_rectangleVAO);
+	glGenBuffers(1, &m_rectangleVBO);
+	glGenBuffers(1, &m_rectangleEBO);
 
-	glBindVertexArray(m_RectangleVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVBO);
+	glBindVertexArray(m_rectangleVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_rectangleVBO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36, nullptr, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 24, nullptr, GL_DYNAMIC_DRAW);
+
+	static constexpr unsigned int indices[] = {
+	0, 1, 2,   // first triangle  (top-left, top-right, bottom-right)
+	0, 2, 3    // second triangle (top-left, bottom-right, bottom-left)
+	};
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rectangleEBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(
 		0,
@@ -55,22 +64,27 @@ void OpenGLRenderer::initRectangleBuffers()
 
 void OpenGLRenderer::destroyRectangleBuffers()
 {
-	if (m_RectangleVBO != 0)
+	if (m_rectangleEBO != 0)
 	{
-		glDeleteBuffers(1, &m_RectangleVBO);
-		m_RectangleVBO = 0;
+		glDeleteBuffers(1, &m_rectangleEBO);
+		m_rectangleEBO = 0;
+	}
+	if (m_rectangleVBO != 0)
+	{
+		glDeleteBuffers(1, &m_rectangleVBO);
+		m_rectangleVBO = 0;
 	}
 
-	if (m_RectangleVAO != 0)
+	if (m_rectangleVAO != 0)
 	{
-		glDeleteVertexArrays(1, &m_RectangleVAO);
-		m_RectangleVAO = 0;
+		glDeleteVertexArrays(1, &m_rectangleVAO);
+		m_rectangleVAO = 0;
 	}
 }
 
 void OpenGLRenderer::initialize(Window& window)
 {
-	m_Window = &window;
+	m_window = &window;
 	glViewport(0, 0, window.getWidth(), window.getHeight());
 }
 
@@ -81,12 +95,16 @@ void OpenGLRenderer::shutdown()
 
 void OpenGLRenderer::beginFrame()
 {
-	float red = m_ClearColor.getRed();
-	float green = m_ClearColor.getGreen();
-	float blue = m_ClearColor.getBlue();
-	float alpha = m_ClearColor.getAlpha();
+	float red = m_clearColor.getRed();
+	float green = m_clearColor.getGreen();
+	float blue = m_clearColor.getBlue();
+	float alpha = m_clearColor.getAlpha();
 
-	m_Shader.use();
+	m_shader.use();
+	m_shader.setVec2("u_Resolution",
+					 static_cast<float>(m_window->getWidth()),
+					 static_cast<float>(m_window->getHeight()));
+
 	glClearColor(red, green, blue, alpha);
 	clear();
 }
@@ -103,7 +121,7 @@ void OpenGLRenderer::clear()
 
 void OpenGLRenderer::setClearColor(const Color& color)
 {
-	m_ClearColor = color;
+	m_clearColor = color;
 }
 
 void OpenGLRenderer::onResize(int width, int height)
@@ -113,38 +131,10 @@ void OpenGLRenderer::onResize(int width, int height)
 
 void OpenGLRenderer::draw(const Rectangle& rectangle)
 {
-	// Normalize coordinates to OpenGL's NDC (-1.0f to 1.0f)
-	float left = (rectangle.position.x / m_Window->getWidth()) * 2.0f - 1.0f;
-	float right = ((rectangle.position.x + rectangle.getWidth()) / m_Window->getWidth()) * 2.0f - 1.0f;
+	std::array<float, 24> rectangleVertices = rectangle.getVertices();
 
-	float top = 1.0f - (rectangle.position.y / m_Window->getHeight()) * 2.0f;
-	float bottom = 1.0f - ((rectangle.position.y + rectangle.getHeight()) / m_Window->getHeight()) * 2.0f;
-
-	float z = (rectangle.position.z - 0.0f) / (100.0f - 0.0f) * 2.0f - 1.0f;
-
-	float red = rectangle.color.getRed();
-	float green = rectangle.color.getGreen();
-	float blue = rectangle.color.getBlue();
-
-	std::array<float, 36> rectangleVertices = {
-		// First Triangle
-		left,  top,		z,	red, green, blue,
-		right, top,		z,	red, green, blue,
-		right, bottom,	z,	red, green, blue,
-		// Second Triangle
-		left,  top,		z,	red, green, blue,
-		right, bottom,	z,	red, green, blue,
-		left,  bottom,  z,	red, green, blue,
-	};
-
-	unsigned int indices[] = {  // note that we start from 0!
-	  0, 1, 3,  // first Triangle
-	  1, 2, 3   // second Triangle
-	};
-
-	glBindVertexArray(m_RectangleVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVBO);
-
+	glBindVertexArray(m_rectangleVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_rectangleVBO);
 	glBufferSubData(
 		GL_ARRAY_BUFFER,
 		0,
@@ -152,6 +142,6 @@ void OpenGLRenderer::draw(const Rectangle& rectangle)
 		rectangleVertices.data()
 	);
 
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }

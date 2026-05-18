@@ -16,33 +16,33 @@ int GLFWindow::validateDimension(int value, const std::string& name)
 // Constructors ==========================================
 
 GLFWindow::GLFWindow()
-	: m_Width(Defaults::WIDTH), m_Height(Defaults::HEIGHT), m_Title(Defaults::TITLE)
+	: m_width(Defaults::WIDTH), m_height(Defaults::HEIGHT), m_title(Defaults::TITLE)
 {
 	init();
 }
 
 GLFWindow::GLFWindow(int width, int height)
-	: m_Width(validateDimension(width, "width")),
-	m_Height(validateDimension(height, "height")),
-	m_Title(Defaults::TITLE)
+	: m_width(validateDimension(width, "width")),
+	m_height(validateDimension(height, "height")),
+	m_title(Defaults::TITLE)
 {
 	init();
 }
 
 GLFWindow::GLFWindow(int width, int height, const std::string& title)
-	: m_Width(validateDimension(width, "width")),
-	m_Height(validateDimension(height, "height")),
-	m_Title(title)
+	: m_width(validateDimension(width, "width")),
+	m_height(validateDimension(height, "height")),
+	m_title(title)
 {
 	init();
 }
 
 void GLFWindow::shutdown()
 {
-	if (m_Window)
+	if (m_window)
 	{
-		glfwDestroyWindow(m_Window);
-		m_Window = nullptr;
+		glfwDestroyWindow(m_window);
+		m_window = nullptr;
 	}
 	glfwTerminate();
 }
@@ -61,22 +61,22 @@ void GLFWindow::init()
 
 	setGLFWHints();
 
-	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+	m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, nullptr);
 
-	if (!m_Window)
+	if (!m_window)
 	{
 		glfwTerminate();
 		throw std::runtime_error("OpenGLWindow: glfwCreateWindow() failed");
 	}
-	glfwMakeContextCurrent(m_Window);
-	glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
+	glfwMakeContextCurrent(m_window);
+	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		throw std::runtime_error("OpenGLWindow: gladLoadGLLoader() failed");
 
 	// Keep stored dimensions in sync if GLFW adjusted them
-	glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
-	glViewport(0, 0, m_Width, m_Height);
+	glfwGetFramebufferSize(m_window, &m_width, &m_height);
+	glViewport(0, 0, m_width, m_height);
 }
 
 void GLFWindow::pollEvents()
@@ -86,16 +86,16 @@ void GLFWindow::pollEvents()
 
 void GLFWindow::swapBuffers()
 {
-	glfwSwapBuffers(m_Window);
+	glfwSwapBuffers(m_window);
 }
 
 bool GLFWindow::shouldClose()
 {
-	return glfwWindowShouldClose(m_Window);
+	return glfwWindowShouldClose(m_window);
 }
 
-int GLFWindow::getWidth()  const { return m_Width; }
-int GLFWindow::getHeight() const { return m_Height; }
+int GLFWindow::getWidth()  const { return m_width; }
+int GLFWindow::getHeight() const { return m_height; }
 
 void GLFWindow::setGLFWHints()
 {

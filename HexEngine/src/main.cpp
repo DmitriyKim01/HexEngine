@@ -11,9 +11,9 @@ const unsigned int SCREEN_HEIGHT = 1080;
 
 int main()
 {
-	Rectangle rect(Position(0.0f, 0.0f), 200.0f, 200.0f, Color::Red);
-	Rectangle rect2(400.0f, 300.0f, 150.0f, 150.0f, Color::Green);
-	Rectangle rect3(600.0f, 200.0f, 50.0f, 200.0f, Color::Blue);
+	Rectangle rect(Position(0, 0), 200, 200, Color::Red);
+	Rectangle rect2(400, 300, 150, 150, Color::Green);
+	Rectangle rect3(600, 200, 50, 200, Color::Blue);
 
 	Window* window = new GLFWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "HexEngine");
 	Renderer* renderer = new OpenGLRenderer(*window, Color::White);
