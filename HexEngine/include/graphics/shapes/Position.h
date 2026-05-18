@@ -8,5 +8,7 @@ public:
 
 	Position() = default;
 	Position(float x, float y);
+	Position(int x, int y);
 	Position(float x, float y, float z);
+	Position(int x, int y, int z);
 };
