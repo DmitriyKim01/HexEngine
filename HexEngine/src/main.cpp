@@ -12,7 +12,7 @@ const unsigned int SCREEN_HEIGHT = 1080;
 int main()
 {
 	Rectangle rect(Position(0, 0), 200, 200, Color::Red);
-	Rectangle rect2(400, 300, 150, 150, Color::Green);
+	Rectangle rect2(100, 100, 200, 200, Color::Green);
 	Rectangle rect3(600, 200, 50, 200, Color::Blue);
 
 	Window* window = new GLFWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "HexEngine");

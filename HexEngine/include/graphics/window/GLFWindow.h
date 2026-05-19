@@ -10,7 +10,6 @@ private:
 	int m_height;
 	std::string m_title;
 	GLFWwindow* m_window = nullptr;
-
 	void init();
 	void setGLFWHints();
 	static int validateDimension(int value, const std::string& name);

@@ -45,6 +45,9 @@
     <ClCompile Include="src\graphics\renderer\opengl\OpenGLShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLRectangleBatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\graphics\window\GLFWindow.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\graphics\renderer\opengl\OpenGLShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLRectangleBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

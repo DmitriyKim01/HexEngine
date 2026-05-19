@@ -3,6 +3,7 @@
 #include <graphics/renderer/Renderer.h>
 #include <graphics/window/Window.h>
 #include <graphics/renderer/opengl/OpenGLShader.h>
+#include <graphics/renderer/opengl/OpenGLRectangleBatch.h>
 
 class OpenGLRenderer : public Renderer
 {
@@ -10,13 +11,7 @@ private:
 	Window* m_window = nullptr;
 	Color m_clearColor;
 	OpenGLShader m_shader;
-
-	unsigned int m_rectangleVAO = 0;
-	unsigned int m_rectangleVBO = 0;
-	unsigned int m_rectangleEBO = 0;
-
-	void initRectangleBuffers();
-	void destroyRectangleBuffers();
+	OpenGLRectangleBatch m_rectangleBatch;
 public:
 	OpenGLRenderer(Window& window, const Color& clearColor);
 	~OpenGLRenderer() override;

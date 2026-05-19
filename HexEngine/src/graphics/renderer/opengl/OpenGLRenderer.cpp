@@ -9,77 +9,16 @@
 #include <array>
 
 OpenGLRenderer::OpenGLRenderer(Window& window, const Color& clearColor)
-	: m_clearColor(clearColor), m_shader("assets/opengl/shaders/base.vert", "assets/opengl/shaders/base.frag")
+	:	m_clearColor(clearColor), 
+		m_shader("assets/opengl/shaders/base.vert", "assets/opengl/shaders/base.frag"),
+		m_rectangleBatch()
 {
 	initialize(window);
-	initRectangleBuffers();
 }
 
 OpenGLRenderer::~OpenGLRenderer()
 {
 	shutdown();
-}
-
-void OpenGLRenderer::initRectangleBuffers()
-{
-	glGenVertexArrays(1, &m_rectangleVAO);
-	glGenBuffers(1, &m_rectangleVBO);
-	glGenBuffers(1, &m_rectangleEBO);
-
-	glBindVertexArray(m_rectangleVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_rectangleVBO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 24, nullptr, GL_DYNAMIC_DRAW);
-
-	static constexpr unsigned int indices[] = {
-	0, 1, 2,   // first triangle  (top-left, top-right, bottom-right)
-	0, 2, 3    // second triangle (top-left, bottom-right, bottom-left)
-	};
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rectangleEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(
-		0,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		6 * sizeof(float),
-		(void*)0
-	);
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(
-		1,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		6 * sizeof(float),
-		(void*)(3 * sizeof(float))
-	);
-	glEnableVertexAttribArray(1);
-
-	//glBindVertexArray(0);
-}
-
-void OpenGLRenderer::destroyRectangleBuffers()
-{
-	if (m_rectangleEBO != 0)
-	{
-		glDeleteBuffers(1, &m_rectangleEBO);
-		m_rectangleEBO = 0;
-	}
-	if (m_rectangleVBO != 0)
-	{
-		glDeleteBuffers(1, &m_rectangleVBO);
-		m_rectangleVBO = 0;
-	}
-
-	if (m_rectangleVAO != 0)
-	{
-		glDeleteVertexArrays(1, &m_rectangleVAO);
-		m_rectangleVAO = 0;
-	}
 }
 
 void OpenGLRenderer::initialize(Window& window)
@@ -90,7 +29,6 @@ void OpenGLRenderer::initialize(Window& window)
 
 void OpenGLRenderer::shutdown()
 {
-	destroyRectangleBuffers();
 }
 
 void OpenGLRenderer::beginFrame()
@@ -131,17 +69,5 @@ void OpenGLRenderer::onResize(int width, int height)
 
 void OpenGLRenderer::draw(const Rectangle& rectangle)
 {
-	std::array<float, 24> rectangleVertices = rectangle.getVertices();
-
-	glBindVertexArray(m_rectangleVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_rectangleVBO);
-	glBufferSubData(
-		GL_ARRAY_BUFFER,
-		0,
-		sizeof(rectangleVertices),
-		rectangleVertices.data()
-	);
-
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
+	m_rectangleBatch.draw(rectangle);
 }
