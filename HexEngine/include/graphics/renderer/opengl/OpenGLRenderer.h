@@ -4,6 +4,7 @@
 #include <graphics/window/Window.h>
 #include <graphics/renderer/opengl/OpenGLShader.h>
 #include <graphics/renderer/opengl/OpenGLRectangleBatch.h>
+#include <graphics/renderer/opengl/OpenGLTriangleBatch.h>
 
 class OpenGLRenderer : public Renderer
 {
@@ -12,6 +13,7 @@ private:
 	Color m_clearColor;
 	OpenGLShader m_shader;
 	OpenGLRectangleBatch m_rectangleBatch;
+	OpenGLTriangleBatch m_triangleBatch;
 public:
 	OpenGLRenderer(Window& window, const Color& clearColor);
 	~OpenGLRenderer() override;
@@ -28,4 +30,5 @@ public:
 	void onResize(int width, int height) override;
 
 	void draw(const Rectangle& rectangle) override;
+	void draw(const Triangle& triangle);
 };

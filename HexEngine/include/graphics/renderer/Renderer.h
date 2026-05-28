@@ -2,6 +2,7 @@
 
 #include <graphics/shapes/Color.h>
 #include <graphics/shapes/2d/Rectangle.h>
+#include <graphics/shapes/2d/Triangle.h>
 #include <graphics/window/Window.h>
 
 class Renderer {
@@ -20,4 +21,5 @@ public:
 	virtual void onResize(int width, int height) = 0;
 
 	virtual void draw(const Rectangle& rectangle) = 0;
+	virtual void draw(const Triangle& triangle) = 0;
 };

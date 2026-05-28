@@ -11,7 +11,8 @@
 OpenGLRenderer::OpenGLRenderer(Window& window, const Color& clearColor)
 	:	m_clearColor(clearColor), 
 		m_shader("assets/opengl/shaders/base.vert", "assets/opengl/shaders/base.frag"),
-		m_rectangleBatch()
+		m_rectangleBatch(),
+		m_triangleBatch()
 {
 	initialize(window);
 }
@@ -70,4 +71,9 @@ void OpenGLRenderer::onResize(int width, int height)
 void OpenGLRenderer::draw(const Rectangle& rectangle)
 {
 	m_rectangleBatch.draw(rectangle);
+}
+
+void OpenGLRenderer::draw(const Triangle& triangle)
+{
+	m_triangleBatch.draw(triangle);
 }
