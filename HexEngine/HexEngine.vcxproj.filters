@@ -33,7 +33,7 @@
     <ClCompile Include="src\graphics\shapes\Position.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\shapes\Shape2D.cpp">
+    <ClCompile Include="src\graphics\shapes\2d\Shape2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\shapes\2d\Rectangle.cpp">
@@ -43,6 +43,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\renderer\opengl\OpenGLShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLRectangleBatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\shapes\2d\Triangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLTriangleBatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\shapes\3d\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLCubeBatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\shapes\3d\Shape3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +74,7 @@
     <ClInclude Include="include\graphics\shapes\Position.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\graphics\shapes\Shape2D.h">
+    <ClInclude Include="include\graphics\shapes\2d\Shape2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\graphics\shapes\2d\Rectangle.h">
@@ -69,6 +87,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\graphics\renderer\opengl\OpenGLShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLRectangleBatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics\shapes\2d\Triangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLTriangleBatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics\shapes\3d\Shape3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics\shapes\3d\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLCubeBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

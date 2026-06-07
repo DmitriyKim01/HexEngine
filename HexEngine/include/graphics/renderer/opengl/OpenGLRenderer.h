@@ -3,6 +3,9 @@
 #include <graphics/renderer/Renderer.h>
 #include <graphics/window/Window.h>
 #include <graphics/renderer/opengl/OpenGLShader.h>
+#include <graphics/renderer/opengl/OpenGLRectangleBatch.h>
+#include <graphics/renderer/opengl/OpenGLTriangleBatch.h>
+#include <graphics/renderer/opengl/OpenGLCubeBatch.h>
 
 class OpenGLRenderer : public Renderer
 {
@@ -10,13 +13,9 @@ private:
 	Window* m_window = nullptr;
 	Color m_clearColor;
 	OpenGLShader m_shader;
-
-	unsigned int m_rectangleVAO = 0;
-	unsigned int m_rectangleVBO = 0;
-	unsigned int m_rectangleEBO = 0;
-
-	void initRectangleBuffers();
-	void destroyRectangleBuffers();
+	OpenGLRectangleBatch m_rectangleBatch;
+	OpenGLTriangleBatch m_triangleBatch;
+	OpenGLCubeBatch m_cubeBatch;
 public:
 	OpenGLRenderer(Window& window, const Color& clearColor);
 	~OpenGLRenderer() override;
@@ -33,4 +32,6 @@ public:
 	void onResize(int width, int height) override;
 
 	void draw(const Rectangle& rectangle) override;
+	void draw(const Triangle& triangle) override;
+	void draw(const Cube& cube) override;
 };

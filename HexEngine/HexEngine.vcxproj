@@ -155,23 +155,35 @@
   <ItemGroup>
     <ClCompile Include="include\graphics\window\Window.h" />
     <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLCubeBatch.cpp" />
     <ClCompile Include="src\graphics\renderer\opengl\OpenGLRenderer.cpp" />
     <ClCompile Include="src\graphics\renderer\opengl\OpenGLShader.cpp" />
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLRectangleBatch.cpp" />
+    <ClCompile Include="src\graphics\renderer\opengl\OpenGLTriangleBatch.cpp" />
+    <ClCompile Include="src\graphics\shapes\2d\Triangle.cpp" />
+    <ClCompile Include="src\graphics\shapes\3d\Cube.cpp" />
+    <ClCompile Include="src\graphics\shapes\3d\Shape3D.cpp" />
     <ClCompile Include="src\graphics\window\GLFWindow.cpp" />
     <ClCompile Include="src\graphics\shapes\2d\Rectangle.cpp" />
     <ClCompile Include="src\graphics\shapes\Color.cpp" />
     <ClCompile Include="src\graphics\shapes\Position.cpp" />
-    <ClCompile Include="src\graphics\shapes\Shape2D.cpp" />
+    <ClCompile Include="src\graphics\shapes\2d\Shape2D.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLCubeBatch.h" />
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLRectangleBatch.h" />
     <ClInclude Include="include\graphics\renderer\opengl\OpenGLShader.h" />
+    <ClInclude Include="include\graphics\renderer\opengl\OpenGLTriangleBatch.h" />
+    <ClInclude Include="include\graphics\shapes\2d\Triangle.h" />
+    <ClInclude Include="include\graphics\shapes\3d\Cube.h" />
+    <ClInclude Include="include\graphics\shapes\3d\Shape3D.h" />
     <ClInclude Include="include\graphics\window\GLFWindow.h" />
     <ClInclude Include="include\graphics\renderer\opengl\OpenGLRenderer.h" />
     <ClInclude Include="include\graphics\renderer\Renderer.h" />
     <ClInclude Include="include\graphics\shapes\2d\Rectangle.h" />
     <ClInclude Include="include\graphics\shapes\Color.h" />
-    <ClInclude Include="include\graphics\shapes\Shape2D.h" />
+    <ClInclude Include="include\graphics\shapes\2d\Shape2D.h" />
     <ClInclude Include="include\graphics\shapes\Position.h" />
   </ItemGroup>
   <ItemGroup>
