@@ -6,6 +6,7 @@ uniform vec2 u_Resolution;
 
 out vec3 v_Color;
 
+
 void main()
 {
 	vec2 ndc = (a_Position.xy / u_Resolution) * 2.0 - 1.0;

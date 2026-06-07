@@ -1,6 +1,6 @@
 #pragma once
 
-#include <graphics/shapes/Shape2D.h>
+#include <graphics/shapes/2d/Shape2D.h>
 #include <graphics/shapes/Position.h>
 #include <graphics/shapes/Color.h>
 

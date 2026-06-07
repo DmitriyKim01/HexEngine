@@ -5,6 +5,7 @@
 #include <graphics/renderer/opengl/OpenGLShader.h>
 #include <graphics/renderer/opengl/OpenGLRectangleBatch.h>
 #include <graphics/renderer/opengl/OpenGLTriangleBatch.h>
+#include <graphics/renderer/opengl/OpenGLCubeBatch.h>
 
 class OpenGLRenderer : public Renderer
 {
@@ -14,6 +15,7 @@ private:
 	OpenGLShader m_shader;
 	OpenGLRectangleBatch m_rectangleBatch;
 	OpenGLTriangleBatch m_triangleBatch;
+	OpenGLCubeBatch m_cubeBatch;
 public:
 	OpenGLRenderer(Window& window, const Color& clearColor);
 	~OpenGLRenderer() override;
@@ -30,5 +32,6 @@ public:
 	void onResize(int width, int height) override;
 
 	void draw(const Rectangle& rectangle) override;
-	void draw(const Triangle& triangle);
+	void draw(const Triangle& triangle) override;
+	void draw(const Cube& cube) override;
 };

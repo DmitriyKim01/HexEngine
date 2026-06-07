@@ -1,6 +1,7 @@
 #include <graphics/renderer/opengl/OpenGLShader.h>
 
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 #include <string>
 #include <fstream>
@@ -114,5 +115,10 @@ void OpenGLShader::setFloat(const std::string& name, float value) const
 void OpenGLShader::setVec2(const std::string& name, float x, float y) const
 {
 	glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
+}
+
+void OpenGLShader::setMat4(const std::string& name, const glm::mat4& mat) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
